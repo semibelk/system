@@ -1,0 +1,10 @@
+---
+  - name: Check the disk usage of all the file system in the remote servers
+    hosts: all
+    tasks:
+      - name: Execute the df command
+        register: dfout
+        command: "df -h"
+
+      - debug:
+          var: dfout.stdout_lines
