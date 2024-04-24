@@ -8,4 +8,4 @@
       register: services_state
 
     - debug:
-          var: ansible_facts.services
+        var: ansible_facts.services
