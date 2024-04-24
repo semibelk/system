@@ -8,8 +8,8 @@
     async: 0
     poll: 0
 
- - name: Wait for the machine to come back online
-   wait_for_connection:
+  - name: Wait for the machine to come back online
+    wait_for_connection:
     connect_timeout: 60
     sleep: 5
     delay: 5
