@@ -5,5 +5,5 @@
   tasks:
   - name: Unconditionally reboot the machine with all defaults
     ansible.builtin.reboot:
-      reboot_timeout: 30
-      msg: "Rebooting machine in 30 seconds"
+      reboot_timeout: 60
+      msg: "Rebooting machine in 60 seconds"
