@@ -65,7 +65,7 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   # Boot options
-  boot_delay = 5000 # Add a boot delay (5 seconds) to allow console access during ISO boot
+  # boot_delay = 5000 # Add a boot delay (5 seconds) to allow console access during ISO boot
 
   # Additional hardware settings
   firmware = "efi" # Use EFI firmware; change to "bios" if required
