@@ -1,30 +1,67 @@
 provider "vsphere" {
-  user     = "terraform"
-  password = "Terraform123!"
-  vsphere_server = "192.168.1.102"
+  user           = "terraformvsphere.local"
+  password       = "Terraform123!"
+  server         = "192.168.1.102"
+  allow_unverified_ssl = true
 }
 
+# Datacenter
+data "vsphere_datacenter" "dc" {
+  name = "192.168.1.101"
+}
+
+# Cluster
+data "vsphere_cluster" "cluster" {
+  name          = "192.168.1.101"
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+# Datastore
+data "vsphere_datastore" "datastore" {
+  name          = "ESXI-Datastore"
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+# Network
+data "vsphere_network" "network" {
+  name          = "VM Network"
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+# Virtual Machine
 resource "vsphere_virtual_machine" "vm" {
-  name             = "vmname"
-  datacenter_id    = "192.168.1.101"
+  name             = "MyNewVM"
+  resource_pool_id = data.vsphere_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
 
   num_cpus = 2
-  memory   = 2048
+  memory   = 4096
+  guest_id = "ubuntu64Guest"
 
-  network_interface {
-    label = "VM Network"
-    ipv4_address = "192.168.1.92"
-    ipv4_prefix_length = 24
-    ipv4_gateway = "192.168.1.1"
-  }
-
+  # Disk configuration
   disk {
-    label = "disk0"
-    size  = 20
+    label            = "disk0"
+    size             = 50 # Disk size in GB
+    eagerly_scrub    = false
+    thin_provisioned = true
   }
 
-  cdrom {
-    datastore_id = "Data"
-    path = "[datastore1] ISO/ubuntu-22.04.3-desktop-amd64.iso"
+  # Network configuration
+  network_interface {
+    network_id   = data.vsphere_network.network.id
+    adapter_type = "vmxnet3"
   }
+
+  # CD-ROM/ISO configuration
+  cdrom {
+    client_device = false
+    datastore_id  = data.vsphere_datastore.datastore.id
+    path          = "[Data] ISO/ubuntu-22.04.3-desktop-amd64.iso"
+  }
+
+  # Boot options
+  boot_delay = 5000 # Add a boot delay (5 seconds) to allow console access during ISO boot
+
+  # Additional hardware settings
+  firmware = "efi" # Use EFI firmware; change to "bios" if required
 }
