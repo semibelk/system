@@ -62,7 +62,6 @@ resource "vsphere_virtual_machine" "vm" {
   # CD-ROM/ISO configuration
   cdrom {
     client_device = false
-    datastore_id  = data.vsphere_datastore.datastore.id
     path          = "[Data] ISO/ubuntu-22.04.3-desktop-amd64.iso"
   }
 
