@@ -22,10 +22,7 @@ data "vsphere_datastore" "datastore" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-data "vsphere_resource_pool" "pool" {
-  name          = "192.168.1.101/Resources"
-  datacenter_id = data.vsphere_datacenter.datacenter.id
-}
+data "vsphere_resource_pool" "pool" {}
 
 # Network
 data "vsphere_network" "network" {
@@ -36,7 +33,7 @@ data "vsphere_network" "network" {
 # Virtual Machine
 resource "vsphere_virtual_machine" "vm" {
   name             = "MyNewVM"
-  resource_pool_id = "pool"
+  resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   datastore_id     = data.vsphere_datastore.datastore.id
 
   num_cpus = 2
