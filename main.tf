@@ -24,7 +24,7 @@ data "vsphere_datastore" "datastore" {
 
 data "vsphere_resource_pool" "pool" {
   name          = "192.168.1.101/Resources"
-  datacenter_id = data.vsphere_datacenter.datacenter.id
+  datacenter_id = data.vsphere_datacenter.dc.id
 }
 
 # Network
