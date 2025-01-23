@@ -16,9 +16,15 @@ data "vsphere_compute_cluster" "cluster" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-# Datastore
+# Datastore-VM
 data "vsphere_datastore" "datastore" {
   name          = "ESXI-Datastore"
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+# Datastore-ISO
+data "vsphere_datastore" "datastore-iso" {
+  name          = "Data"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -62,7 +68,8 @@ resource "vsphere_virtual_machine" "vm" {
   # CD-ROM/ISO configuration
   cdrom {
     client_device = false
-    path          = "[Data] ISO/ubuntu-22.04.3-desktop-amd64.iso"
+    datastore_id  = data.vsphere_datastore.datastore-iso.id
+    path          = "/ISO/ubuntu-22.04.3-desktop-amd64.iso"
   }
 
   # Boot options
