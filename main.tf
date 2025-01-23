@@ -5,6 +5,10 @@ provider "vsphere" {
   allow_unverified_ssl = true
 }
 
+variable "vsphere_user" {}
+variable "vsphere_password" {}
+variable "vsphere_server" {}
+
 # Datacenter
 data "vsphere_datacenter" "dc" {
   name = "Datacenter"
