@@ -12,7 +12,7 @@ data "vsphere_datacenter" "dc" {
 
 # Cluster
 data "vsphere_compute_cluster" "cluster" {
-  name          = "192.168.1.101"
+  name          = "Cluster"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -23,7 +23,7 @@ data "vsphere_datastore" "datastore" {
 }
 
 data "vsphere_resource_pool" "pool" {
-  name          = "192.168.1.101/Resources"
+  name          = "Cluster/Resources"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
