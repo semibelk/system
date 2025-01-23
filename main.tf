@@ -1,7 +1,7 @@
 provider "vsphere" {
-  user           = "terraform@vsphere.local"
-  password       = "Terraform123!"
-  vsphere_server         = "192.168.1.102"
+  user                 = var.vsphere_user
+  password             = var.vsphere_password
+  vsphere_server       = var.vsphere_server
   allow_unverified_ssl = true
 }
 
