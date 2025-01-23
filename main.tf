@@ -11,7 +11,7 @@ data "vsphere_datacenter" "dc" {
 }
 
 # Cluster
-data "vsphere_cluster" "cluster" {
+data "vsphere_compute_cluster" "cluster" {
   name          = "192.168.1.101"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
