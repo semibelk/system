@@ -31,7 +31,6 @@ data "vsphere_network" "network" {
 # Virtual Machine
 resource "vsphere_virtual_machine" "vm" {
   name             = "MyNewVM"
-  resource_pool_id = data.vsphere_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
 
   num_cpus = 2
